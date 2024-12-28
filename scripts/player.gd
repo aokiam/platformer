@@ -1,8 +1,9 @@
 extends CharacterBody2D
 
-
 const SPEED = 700.0
 var jump = 0
+
+const BulletPath = preload("res://scenes/bullet.tscn")
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var timer: Timer = $AnimatedSprite2D/Timer
 
@@ -25,11 +26,13 @@ func _physics_process(delta: float):
 
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
+		$jump.play()
 		velocity.y = jump_velocity
 		jump = 1
 	timer.start()
 	#double jump
 	if Input.is_action_just_pressed("jump") and jump == 1 and !is_on_floor():
+		$jump.play()
 		velocity.y = jump_velocity
 		jump = 0
 		
@@ -39,26 +42,52 @@ func _physics_process(delta: float):
 	# flip the sprite
 	if direction > 0:
 		animated_sprite.flip_h = false
+		if sign($Anchor/Marker2D.position.x) == -1:
+			$Anchor/Marker2D.position.x *= -1
+
 	elif direction < 0:
 		animated_sprite.flip_h = true
+		if sign($Anchor/Marker2D.position.x) == 1:
+			$Anchor/Marker2D.position.x *= -1
+
 	
 	# play animations
 	if is_on_floor():
 		if direction == 0:
-			animated_sprite.play("default")
+			if Input.is_action_pressed("shoot"):
+				animated_sprite.play("default_gun")
+			elif Input.is_action_pressed("crouch"):
+				animated_sprite.play("crouch")
+			else:
+				animated_sprite.play("default")
 		else:
-			animated_sprite.play("run")
+			if Input.is_action_pressed("shoot"):
+				animated_sprite.play("run_gun")
+			else:
+				animated_sprite.play("run")
 	else:
-		animated_sprite.play("jump")
+		if Input.is_action_pressed("shoot"):
+			animated_sprite.play("jump_gun")
+		else:
+			animated_sprite.play("jump")
 	
 	# move
 	if direction:
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-
+		
+	if Input.is_action_just_pressed("shoot"):
+		$shoot.play()
+		var bullet = BulletPath.instantiate()
+		if sign($Anchor/Marker2D.position.x) == 1:
+			bullet.set_bullet_direction(1)
+		else:
+			bullet.set_bullet_direction(-1)
+		get_parent().add_child(bullet)
+		bullet.position = $Anchor/Marker2D.global_position
+			
 	move_and_slide()
-
 
 func _on_timer_timeout() -> void:
 	jump = 0

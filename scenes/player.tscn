@@ -1,7 +1,13 @@
-[gd_scene load_steps=40 format=3 uid="uid://dy05l5pn66qdt"]
+[gd_scene load_steps=52 format=3 uid="uid://dy05l5pn66qdt"]
 
-[ext_resource type="Texture2D" uid="uid://d3rw8lkedsa3u" path="res://assets/sprites/robot.webp" id="1_hor6b"]
+[ext_resource type="Texture2D" uid="uid://clik007yf0xea" path="res://assets/sprites/robot.webp" id="1_hor6b"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_mnooe"]
+[ext_resource type="AudioStream" uid="uid://cn6k1qvk1shjw" path="res://assets/sfx/shoot.wav" id="3_jxq5s"]
+[ext_resource type="AudioStream" uid="uid://dcsddu07t6fch" path="res://assets/sfx/jump.wav" id="4_svftq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kvfmb"]
+atlas = ExtResource("1_hor6b")
+region = Rect2(128, 320, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ig4dp"]
 atlas = ExtResource("1_hor6b")
@@ -19,9 +25,45 @@ region = Rect2(0, 256, 64, 64)
 atlas = ExtResource("1_hor6b")
 region = Rect2(64, 256, 64, 64)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ymo2k"]
+atlas = ExtResource("1_hor6b")
+region = Rect2(128, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qw72d"]
+atlas = ExtResource("1_hor6b")
+region = Rect2(192, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ct3oo"]
+atlas = ExtResource("1_hor6b")
+region = Rect2(256, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_41xwb"]
+atlas = ExtResource("1_hor6b")
+region = Rect2(320, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_33qug"]
+atlas = ExtResource("1_hor6b")
+region = Rect2(384, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nelpm"]
+atlas = ExtResource("1_hor6b")
+region = Rect2(448, 256, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cucv2"]
+atlas = ExtResource("1_hor6b")
+region = Rect2(0, 320, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fg8l4"]
+atlas = ExtResource("1_hor6b")
+region = Rect2(64, 320, 64, 64)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_nffx6"]
 atlas = ExtResource("1_hor6b")
 region = Rect2(0, 384, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gl7ht"]
+atlas = ExtResource("1_hor6b")
+region = Rect2(64, 384, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pisra"]
 atlas = ExtResource("1_hor6b")
@@ -147,6 +189,14 @@ region = Rect2(320, 192, 64, 64)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_kvfmb")
+}],
+"loop": true,
+"name": &"crouch",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_ig4dp")
 }, {
 "duration": 1.0,
@@ -164,11 +214,48 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_ymo2k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qw72d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ct3oo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_41xwb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_33qug")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nelpm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cucv2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fg8l4")
+}],
+"loop": true,
+"name": &"default_gun",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_nffx6")
 }],
 "loop": true,
 "name": &"jump",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gl7ht")
+}],
+"loop": true,
+"name": &"jump_gun",
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -272,9 +359,9 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dcatf"]
-size = Vector2(41.8605, 51.8182)
+size = Vector2(33.0749, 36.8939)
 
-[node name="player" type="CharacterBody2D"]
+[node name="player" type="CharacterBody2D" groups=["player"]]
 position = Vector2(1, -20)
 scale = Vector2(0.3, 0.3)
 collision_layer = 2
@@ -285,16 +372,35 @@ jump_time_to_descent = 0.4
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 5
-position = Vector2(0, 34)
+position = Vector2(-8, 48)
+scale = Vector2(0.770833, 0.770833)
 sprite_frames = SubResource("SpriteFrames_s6qvt")
+animation = &"jump_gun"
 autoplay = "default"
-frame_progress = 0.253128
 
 [node name="Timer" type="Timer" parent="AnimatedSprite2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2.5, 36)
+position = Vector2(-7.33334, 46.9583)
 scale = Vector2(0.645, 1.1)
 shape = SubResource("RectangleShape2D_dcatf")
+
+[node name="Anchor" type="Node2D" parent="."]
+position = Vector2(-6.66667, 46.6667)
+
+[node name="Marker2D" type="Marker2D" parent="Anchor"]
+position = Vector2(26.6667, 0)
+
+[node name="shoot" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_jxq5s")
+max_distance = 7000.0
+panning_strength = 0.0
+bus = &"SFX"
+
+[node name="jump" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_svftq")
+max_distance = 7000.0
+panning_strength = 0.0
+bus = &"SFX"
 
 [connection signal="timeout" from="AnimatedSprite2D/Timer" to="." method="_on_timer_timeout"]

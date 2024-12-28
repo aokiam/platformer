@@ -1,0 +1,165 @@
+[gd_scene load_steps=22 format=3 uid="uid://b3wdc28qqd6d6"]
+
+[ext_resource type="Texture2D" uid="uid://dhl60amk0m3hj" path="res://assets/sprites/enemy.webp" id="1_ettyy"]
+[ext_resource type="PackedScene" uid="uid://e2tvge8y1mjt" path="res://scenes/killzone.tscn" id="2_cdrfe"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0534y"]
+atlas = ExtResource("1_ettyy")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d3imc"]
+atlas = ExtResource("1_ettyy")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3cqpo"]
+atlas = ExtResource("1_ettyy")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sksjj"]
+atlas = ExtResource("1_ettyy")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1q6kq"]
+atlas = ExtResource("1_ettyy")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5myyt"]
+atlas = ExtResource("1_ettyy")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w3psd"]
+atlas = ExtResource("1_ettyy")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xl3oy"]
+atlas = ExtResource("1_ettyy")
+region = Rect2(896, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w3nsg"]
+atlas = ExtResource("1_ettyy")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wkkuu"]
+atlas = ExtResource("1_ettyy")
+region = Rect2(128, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tv55l"]
+atlas = ExtResource("1_ettyy")
+region = Rect2(256, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_um84l"]
+atlas = ExtResource("1_ettyy")
+region = Rect2(384, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_24j16"]
+atlas = ExtResource("1_ettyy")
+region = Rect2(512, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_23m43"]
+atlas = ExtResource("1_ettyy")
+region = Rect2(640, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1m6k"]
+atlas = ExtResource("1_ettyy")
+region = Rect2(768, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kwcf0"]
+atlas = ExtResource("1_ettyy")
+region = Rect2(896, 128, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iihfn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0534y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d3imc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3cqpo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sksjj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1q6kq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5myyt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w3psd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xl3oy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w3nsg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wkkuu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tv55l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_um84l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_24j16")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_23m43")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f1m6k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kwcf0")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rbvxi"]
+radius = 31.0161
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ggta8"]
+radius = 30.0167
+
+[node name="beetle" type="Node2D" groups=["enemy"]]
+
+[node name="beetle" type="CharacterBody2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="beetle"]
+position = Vector2(4, -21)
+sprite_frames = SubResource("SpriteFrames_iihfn")
+autoplay = "default"
+
+[node name="killzone" parent="beetle/AnimatedSprite2D" groups=["enemy"] instance=ExtResource("2_cdrfe")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="beetle/AnimatedSprite2D/killzone"]
+position = Vector2(-3, 1)
+shape = SubResource("CircleShape2D_rbvxi")
+
+[node name="RayCastRight" type="RayCast2D" parent="beetle"]
+target_position = Vector2(48, -1)
+
+[node name="RayCastLeft" type="RayCast2D" parent="beetle"]
+target_position = Vector2(-42, -1)
+
+[node name="RayCastFront" type="RayCast2D" parent="beetle"]
+position = Vector2(-43, -38)
+target_position = Vector2(0, 45)
+
+[node name="RayCastBack" type="RayCast2D" parent="beetle"]
+position = Vector2(49, -38)
+target_position = Vector2(0, 45)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="beetle"]
+position = Vector2(1, -20)
+shape = SubResource("CircleShape2D_ggta8")
+
+[connection signal="body_entered" from="beetle/AnimatedSprite2D/killzone" to="." method="_on_killzone_body_entered"]

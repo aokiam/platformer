@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cps0prenwrwyk"]
+
+[ext_resource type="AudioStream" uid="uid://drf6livotrp4n" path="res://assets/sfx/breakthrough.wav" id="1_ebp2g"]
+
+[node name="Music" type="AudioStreamPlayer2D"]
+stream = ExtResource("1_ebp2g")
+autoplay = true
+max_distance = 7000.0
+panning_strength = 0.0
+bus = &"Music"
